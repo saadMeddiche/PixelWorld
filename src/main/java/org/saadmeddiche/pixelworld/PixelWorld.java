@@ -3,7 +3,7 @@ package org.saadmeddiche.pixelworld;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
@@ -18,6 +18,7 @@ public class PixelWorld extends Canvas {
 
     public final List<Square> squares = new ArrayList<>();
     public final Map<String, Square> squareMap = new HashMap<>();
+    public final Queue<Runnable> actions = new ArrayDeque<>();
 
     private PixelWorld(int width, int height, String name, JFrame frame) {
         this.width = width;

@@ -8,6 +8,8 @@ import org.springframework.boot.ansi.AnsiOutput;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.awt.*;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -18,16 +20,29 @@ public class MainLoop {
     private final PixelWorld mainWorld;
     private final PixelWorld secondaryWorld;
 
+
     @PostConstruct
     public void init() {
-        new Square("#1",2, 0xFF0000, mainWorld);
-        new Square("#2", 0, 0, 2, 0x00FF00, mainWorld);
+
+        var square1 = new Square("#1",2, 0xFF0000, mainWorld);
+        var square2 = new Square("#2", 0, 0, 2, 0x00FF00, mainWorld);
+
+        new LiveSquare(square1);
+
+        for(int i = 0 ; i < 500 ; i++) {
+            mainWorld.actions.add(() -> square2.moveBy(1,1));
+        }
+
     }
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 16)
     public void run() {
 
         log.info(AnsiOutput.toString(AnsiColor.YELLOW, "Frame #{}"), counter++);
+
+        if(mainWorld.actions.isEmpty()) return;
+
+        mainWorld.actions.poll().run();
 
         script_paint_squares(mainWorld);
 
