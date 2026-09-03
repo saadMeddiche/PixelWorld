@@ -36,7 +36,7 @@ public class Square {
         this.world = world;
         this.length = length;
 
-        world.squares.add(this);
+        world.addSquare(this);
 
     }
 

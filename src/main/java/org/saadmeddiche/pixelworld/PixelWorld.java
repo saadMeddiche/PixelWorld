@@ -17,6 +17,7 @@ public class PixelWorld extends Canvas {
     private final BufferedImage bufferedImage;
 
     public final List<Square> squares = new ArrayList<>();
+    public final Map<String, Square> squareMap = new HashMap<>();
 
     private PixelWorld(int width, int height, String name, JFrame frame) {
         this.width = width;
@@ -40,6 +41,16 @@ public class PixelWorld extends Canvas {
         graphics.drawImage(bufferedImage, 0, 0, width, height, null);
 
         graphics.dispose();
+
+    }
+
+    public void addSquare(Square square) {
+
+        if(square == null) return;
+
+        squares.add(square);
+
+        squareMap.put(square.name, square);
 
     }
 
