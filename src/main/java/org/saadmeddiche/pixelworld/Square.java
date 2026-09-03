@@ -41,27 +41,34 @@ public class Square {
     }
 
     public void up() {
-        this.previousY = this.currentY;
-        this.previousX = this.currentX;
-        this.currentY -= 1;
+        moveBy(0, -1);
     }
 
     public void down() {
-        this.previousY = this.currentY;
-        this.previousX = this.currentX;
-        this.currentY +=1;
+        moveBy(0, 1);
     }
 
     public void right() {
-        this.previousY = this.currentY;
-        this.previousX = this.currentX;
-        this.currentX +=1;
+        moveBy(1, 0);
     }
 
     public void left() {
-        this.previousY = this.currentY;
+        moveBy(-1, 0);
+    }
+
+    public void moveBy(int dx, int dy) {
+
+        if(currentX + dx < 0) return; // reached left border
+        if(currentX + dx + length > world.width) return; // reached right border
+
+        if(currentY + dy < 0) return; // reached up border
+        if(currentY + dy + length > world.height) return; // reached down border
+
         this.previousX = this.currentX;
-        this.currentX -=1;
+        this.previousY = this.currentY;
+        this.currentX += dx;
+        this.currentY += dy;
+
     }
 
     public boolean moved() {
