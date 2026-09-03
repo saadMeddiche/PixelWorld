@@ -29,10 +29,10 @@ public class LiveSquare implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) square.world.actions.add(square::up);
-        if (keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN) square.world.actions.add(square::down);
-        if (keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT) square.world.actions.add(square::left);
-        if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) square.world.actions.add(square::right);
+        if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP) square.actions.add(square::up);
+        if (keyCode == KeyEvent.VK_S || keyCode == KeyEvent.VK_DOWN) square.actions.add(square::down);
+        if (keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT) square.actions.add(square::left);
+        if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) square.actions.add(square::right);
     }
 
     @Override

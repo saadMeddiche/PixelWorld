@@ -30,7 +30,7 @@ public class MainLoop {
         new LiveSquare(square1);
 
         for(int i = 0 ; i < 500 ; i++) {
-            mainWorld.actions.add(() -> square2.moveBy(1,1));
+            square2.actions.add(() -> square2.moveBy(1,1));
         }
 
     }
@@ -40,13 +40,23 @@ public class MainLoop {
 
         log.info(AnsiOutput.toString(AnsiColor.YELLOW, "Frame #{}"), counter++);
 
-        if(mainWorld.actions.isEmpty()) return;
-
-        mainWorld.actions.poll().run();
+        script_run_square_actions(mainWorld);
 
         script_paint_squares(mainWorld);
 
         mainWorld.draw();
+
+    }
+
+    private void script_run_square_actions(PixelWorld world) {
+
+        for(var square : world.squares) {
+
+            if(square.actions.isEmpty()) continue;
+
+            square.actions.poll().run();
+
+        }
 
     }
 

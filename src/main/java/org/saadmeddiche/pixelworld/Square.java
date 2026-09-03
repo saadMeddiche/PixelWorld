@@ -1,5 +1,8 @@
 package org.saadmeddiche.pixelworld;
 
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedDeque;
+
 public class Square {
 
     public String name = "unknown";
@@ -10,6 +13,8 @@ public class Square {
     public int color;
     public int length;
     public PixelWorld world;
+
+    public final Queue<Runnable> actions = new ConcurrentLinkedDeque<>();
 
     private Square() {
 
