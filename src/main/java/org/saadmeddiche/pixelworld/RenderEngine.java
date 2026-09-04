@@ -37,7 +37,7 @@ public class RenderEngine {
 
     }
 
-    @Scheduled(fixedRate = 16)
+    @Scheduled(fixedRate = 30)
     public void run() {
 
         log.info(AnsiOutput.toString(AnsiColor.MAGENTA, "Frame #{} delta #{}"), FRAME_COUNTER++, deltaTime);

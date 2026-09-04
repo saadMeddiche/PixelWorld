@@ -48,7 +48,7 @@ public class SimulationEngine {
 
     }
 
-    @Scheduled(fixedRate = 16)
+    @Scheduled(fixedRate = 15)
     public void run() {
 
         log.info(AnsiOutput.toString(AnsiColor.MAGENTA, "Tick #{} delta #{}"), TICK_COUNTER++, deltaTime);
