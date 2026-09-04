@@ -108,12 +108,8 @@ public class GameEngine {
 
         WorldAction worldAction;
         while ((worldAction = world.actions.poll()) != null) {
-
-            if(worldAction instanceof SquareCreation squareCreation) {
-                log.info("Launching square creation action [{}]", squareCreation.toString());
-                squareCreation.execute();
-            }
-
+            log.info("Launching world action {}", worldAction.toString());
+            worldAction.execute();
         }
 
     }

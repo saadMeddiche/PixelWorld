@@ -20,7 +20,7 @@ public class SquareCreation extends WorldAction {
     private final int spawnY;
     private final int squareColor;
     private final int squareLength;
-    private Consumer<Square> onCreated;
+    private @ToString.Exclude final Consumer<Square> onCreated;
 
     public SquareCreation(String squareName, int spawnX, int spawnY, int squareColor, int squareLength, PixelWorld world) {
         this(squareName, spawnX, spawnY, squareColor, squareLength, world, null);
