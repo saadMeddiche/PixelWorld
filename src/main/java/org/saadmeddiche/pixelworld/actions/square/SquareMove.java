@@ -1,6 +1,6 @@
 package org.saadmeddiche.pixelworld.actions.square;
 
-import org.saadmeddiche.pixelworld.GameEngine;
+import org.saadmeddiche.pixelworld.SimulationEngine;
 import org.saadmeddiche.pixelworld.square.Square;
 
 public class SquareMove extends SquareAction {
@@ -16,8 +16,8 @@ public class SquareMove extends SquareAction {
 
     public void execute() {
 
-        double moveX = x * square.speed * GameEngine.deltaTime;
-        double moveY = y * square.speed * GameEngine.deltaTime;
+        double moveX = x * square.speed * SimulationEngine.deltaTime;
+        double moveY = y * square.speed * SimulationEngine.deltaTime;
 
         if (square.exactX + moveX < 0) return;
         if (square.exactX + moveX + square.length > square.world.width) return;
