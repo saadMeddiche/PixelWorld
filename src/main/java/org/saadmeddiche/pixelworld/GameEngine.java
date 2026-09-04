@@ -99,9 +99,14 @@ public class GameEngine {
 
         if(world.actions.isEmpty()) return;
 
-        WorldAction action;
-        while ((action = world.actions.poll()) != null) {
-            action.execute();
+        WorldAction worldAction;
+        while ((worldAction = world.actions.poll()) != null) {
+
+            if(worldAction instanceof SquareCreation squareCreation) {
+                log.info("Launching square creation action [{}]", squareCreation.toString());
+                squareCreation.execute();
+            }
+
         }
 
     }

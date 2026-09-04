@@ -1,5 +1,6 @@
 package org.saadmeddiche.pixelworld.actions.world;
 
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.saadmeddiche.pixelworld.world.PixelWorld;
 import org.saadmeddiche.pixelworld.square.Square;
@@ -9,6 +10,7 @@ import org.springframework.boot.ansi.AnsiColor;
 import org.springframework.boot.ansi.AnsiOutput;
 
 @Slf4j
+@ToString
 public class SquareCreation extends WorldAction {
 
     private final String squareName;
@@ -30,13 +32,31 @@ public class SquareCreation extends WorldAction {
 
         try {
 
-            Square square = new Square(squareName, new SpawnPoint(spawnX, spawnY, pixelWorld), squareLength, squareColor);
+            SpawnPoint spawnPoint = new SpawnPoint(spawnX, spawnY, pixelWorld);
+
+            if(spawnX < 0) {
+                throw new SpawnPointOutsideWorldException("square body outside left border");
+            }
+
+            if(spawnX + squareLength > pixelWorld.width) {
+                throw new SpawnPointOutsideWorldException("square body outside right border");
+            }
+
+            if(spawnY < 0) {
+                throw new SpawnPointOutsideWorldException("square body outside top border");
+            }
+
+            if(spawnY + squareLength > pixelWorld.height) {
+                throw new SpawnPointOutsideWorldException("square body outside top border");
+            }
+
+            Square square = new Square(squareName, spawnPoint, squareLength, squareColor);
 
             pixelWorld.addSquare(square);
 
         }
         catch (SpawnPointOutsideWorldException e) {
-            log.warn(AnsiOutput.toString(AnsiColor.YELLOW , "Attempt to create square [{}] in point x:{} y:{} which is outside the range of world [{}]"), squareName, spawnX, spawnY, pixelWorld.name);
+            log.warn(AnsiOutput.toString(AnsiColor.RED , "Attempt to create square with name:{} and length:{} in point x:{} y:{} which is outside the range of world [{}] | mess: {}"), squareName, squareLength, spawnX, spawnY, pixelWorld.name, e.getMessage());
         }
 
     }
