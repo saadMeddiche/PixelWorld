@@ -9,6 +9,8 @@ import org.saadmeddiche.pixelworld.world.SpawnPointOutsideWorldException;
 import org.springframework.boot.ansi.AnsiColor;
 import org.springframework.boot.ansi.AnsiOutput;
 
+import java.util.function.Consumer;
+
 @Slf4j
 @ToString
 public class SquareCreation extends WorldAction {
@@ -18,14 +20,20 @@ public class SquareCreation extends WorldAction {
     private final int spawnY;
     private final int squareColor;
     private final int squareLength;
+    private Consumer<Square> onCreated;
 
     public SquareCreation(String squareName, int spawnX, int spawnY, int squareColor, int squareLength, PixelWorld world) {
+        this(squareName, spawnX, spawnY, squareColor, squareLength, world, null);
+    }
+
+    public SquareCreation(String squareName, int spawnX, int spawnY, int squareColor, int squareLength, PixelWorld world, Consumer<Square> onCreated) {
         super(world);
         this.squareName = squareName;
         this.spawnX = spawnX;
         this.spawnY = spawnY;
         this.squareColor = squareColor;
         this.squareLength = squareLength;
+        this.onCreated = onCreated;
     }
 
     public void execute() {
@@ -47,12 +55,16 @@ public class SquareCreation extends WorldAction {
             }
 
             if(spawnY + squareLength > pixelWorld.height) {
-                throw new SpawnPointOutsideWorldException("square body outside top border");
+                throw new SpawnPointOutsideWorldException("square body outside bottom border");
             }
 
             Square square = new Square(squareName, spawnPoint, squareLength, squareColor);
 
             pixelWorld.addSquare(square);
+
+            if(onCreated != null) {
+                onCreated.accept(square);
+            }
 
         }
         catch (SpawnPointOutsideWorldException e) {

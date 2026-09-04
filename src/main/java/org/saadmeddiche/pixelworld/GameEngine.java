@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.saadmeddiche.pixelworld.actions.world.SquareCreation;
 import org.saadmeddiche.pixelworld.actions.world.WorldAction;
+import org.saadmeddiche.pixelworld.square.SquareController;
 import org.saadmeddiche.pixelworld.world.PixelWorld;
 import org.springframework.boot.ansi.AnsiColor;
 import org.springframework.boot.ansi.AnsiOutput;
@@ -66,13 +67,19 @@ public class GameEngine {
 
         this.mainWorld.actions.add(
                 new SquareCreation("#1", mainWorld.width / 2 , mainWorld.height / 2,
-                        0xFF0000, 10, mainWorld
+                        0xFF0000, 10, mainWorld,
+                        square -> new SquareController(frame , square)
                 )
         );
 
         this.mainWorld.actions.add(
                 new SquareCreation("#2", 0 , 0,
-                        0x00FF00, 2, mainWorld
+                        0x00FF00, 2, mainWorld,
+                        square -> {
+                            for(int i = 0 ; i < 500; i++) {
+                                square.moveBy(1 , 1);
+                            }
+                        }
                 )
         );
 

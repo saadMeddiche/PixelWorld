@@ -1,29 +1,19 @@
 package org.saadmeddiche.pixelworld.square;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class LiveSquare implements KeyListener {
+public class SquareController implements KeyListener {
 
-    private final Square square;
     private final JFrame frame;
+    private final Square square;
 
-    public LiveSquare(Square square) {
+    public SquareController(JFrame frame, Square square) {
         this.square = square;
-
-        JFrame frame = new JFrame("Live Square " + square.name);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setResizable(false);
-        frame.setPreferredSize(new Dimension(500, 100));
-        frame.pack();
-        frame.setVisible(true);
+        this.frame = frame;
         frame.addKeyListener(this);
         frame.setFocusable(true);
-
-        this.frame = frame;
-
     }
 
     @Override
@@ -36,11 +26,19 @@ public class LiveSquare implements KeyListener {
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
-    }
+    public void keyReleased(KeyEvent e) {}
 
     @Override
-    public void keyTyped(KeyEvent e) {
+    public void keyTyped(KeyEvent e) {}
+
+    public void attachController() {
+        this.frame.addKeyListener(this);
+        this.frame.setFocusable(true);
+    }
+
+    public void detachController() {
+        this.frame.removeKeyListener(this);
+        this.frame.setFocusable(true);
     }
 
 }
