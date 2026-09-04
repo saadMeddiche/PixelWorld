@@ -11,7 +11,8 @@ public class PixelWorld {
     public final int width;
     public final int height;
     public final String name;
-    private final Map<String, Square> squares = new HashMap<>();
+    private final List<Square> squares = new ArrayList<>();
+    private final Map<String, Square> squaresMap = new HashMap<>();
     public final Queue<WorldAction> actions = new ConcurrentLinkedDeque<>();
 
     public PixelWorld(int width, int height, String name) {
@@ -24,21 +25,20 @@ public class PixelWorld {
 
         if(square == null) return;
 
-        squares.put(square.name, square);
+        squaresMap.put(square.name, square);
+        squares.add(square);
 
     }
 
-    public Collection<Square> getSquares() {
-
-        return squares.values();
-
+    public List<Square> getSquares() {
+        return squares;
     }
 
     public Optional<Square> getSquare(String name) {
 
         if(name == null) return Optional.empty();
 
-        return Optional.ofNullable(squares.get(name));
+        return Optional.ofNullable(squaresMap.get(name));
 
     }
 
