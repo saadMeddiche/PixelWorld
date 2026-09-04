@@ -22,8 +22,11 @@ import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 public class GameEngine {
 
     private long counter =  0;
-    private static int FRAME_WIDTH = 500;
-    private static int FRAME_HEIGHT = 500;
+    private final static int FRAME_WIDTH = 500;
+    private final static int FRAME_HEIGHT = 500;
+
+    public static volatile double deltaTime = 0;
+    private static volatile long lastTime = System.nanoTime();
 
     private final JFrame frame;
     private final PixelWorld mainWorld;
@@ -67,14 +70,14 @@ public class GameEngine {
 
         this.mainWorld.actions.add(
                 new SquareCreation("#1", mainWorld.width / 2 , mainWorld.height / 2,
-                        0xFF0000, 10, mainWorld,
+                        0xFF0000, 10, 100, mainWorld,
                         square -> new SquareController(frame , square)
                 )
         );
 
         this.mainWorld.actions.add(
                 new SquareCreation("#2", 0 , 0,
-                        0x00FF00, 2, mainWorld,
+                        0x00FF00, 2, 10, mainWorld,
                         square -> {
                             for(int i = 0 ; i < 500; i++) {
                                 square.moveBy(1 , 1);
@@ -88,7 +91,9 @@ public class GameEngine {
     @Scheduled(fixedRate = 16)
     public void run() {
 
-        log.info(AnsiOutput.toString(AnsiColor.MAGENTA, "Frame #{}"), counter++);
+        log.info(AnsiOutput.toString(AnsiColor.MAGENTA, "Frame #{} delta #{}"), counter++, deltaTime);
+
+        updateClock();
 
         clear();
 
@@ -142,6 +147,16 @@ public class GameEngine {
 
     private void clear() {
         this.bufferedImage.setRGB(0 , 0, FRAME_WIDTH, FRAME_HEIGHT, new int[FRAME_WIDTH * FRAME_HEIGHT], 0, FRAME_WIDTH);
+    }
+
+    private void updateClock() {
+
+        long current = System.nanoTime();
+
+        deltaTime = (current - lastTime) / 1_000_000_000.0;
+
+        lastTime = current;
+
     }
 
     private void setPixel(int x, int y , int rgb) {

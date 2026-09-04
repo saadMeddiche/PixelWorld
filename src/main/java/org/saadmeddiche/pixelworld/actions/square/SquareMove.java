@@ -1,5 +1,6 @@
 package org.saadmeddiche.pixelworld.actions.square;
 
+import org.saadmeddiche.pixelworld.GameEngine;
 import org.saadmeddiche.pixelworld.square.Square;
 
 public class SquareMove extends SquareAction {
@@ -15,15 +16,20 @@ public class SquareMove extends SquareAction {
 
     public void execute() {
 
-        if(square.currentX + x < 0) return; // reached left border
-        if(square.currentX + x + square.length > square.world.width) return; // reached right border
+        double moveX = x * square.speed * GameEngine.deltaTime;
+        double moveY = y * square.speed * GameEngine.deltaTime;
 
-        if(square.currentY + y < 0) return; // reached up border
-        if(square.currentY + y + square.length > square.world.height) return; // reached down border
+        if (square.exactX + moveX < 0) return;
+        if (square.exactX + moveX + square.length > square.world.width) return;
 
+        if (square.exactY + moveY < 0) return;
+        if (square.exactY + moveY + square.length > square.world.height) return;
 
-        square.currentX += x;
-        square.currentY += y;
+        square.exactX += moveX;
+        square.exactY += moveY;
+
+        square.currentX = (int) Math.round(square.exactX);
+        square.currentY = (int) Math.round(square.exactY);
 
     }
 

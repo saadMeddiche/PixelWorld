@@ -10,8 +10,11 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class Square {
 
+    public int speed;
     public int currentX;
     public int currentY;
+    public double exactX;
+    public double exactY;
     public final PixelWorld world;
 
     public final String name;
@@ -19,10 +22,13 @@ public class Square {
     public final int color;
     public final Queue<SquareAction> actions = new ConcurrentLinkedDeque<>();
 
-    public Square(String name, SpawnPoint spawn, int length, int color) {
+    public Square(String name, SpawnPoint spawn, int length, int color, int speed) {
 
+        this.speed = speed;
         this.currentX = spawn.x;
         this.currentY = spawn.y;
+        this.exactX = spawn.x;
+        this.exactY = spawn.y;
         this.world = spawn.world;
 
         this.name = name;

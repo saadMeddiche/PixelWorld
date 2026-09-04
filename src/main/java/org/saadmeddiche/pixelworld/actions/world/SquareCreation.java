@@ -20,19 +20,21 @@ public class SquareCreation extends WorldAction {
     private final int spawnY;
     private final int squareColor;
     private final int squareLength;
+    private final int squareSpeed;
     private @ToString.Exclude final Consumer<Square> onCreated;
 
-    public SquareCreation(String squareName, int spawnX, int spawnY, int squareColor, int squareLength, PixelWorld world) {
-        this(squareName, spawnX, spawnY, squareColor, squareLength, world, null);
+    public SquareCreation(String squareName, int spawnX, int spawnY, int squareColor, int squareLength, int squareSpeed, PixelWorld world) {
+        this(squareName, spawnX, spawnY, squareColor, squareLength, squareSpeed, world, null);
     }
 
-    public SquareCreation(String squareName, int spawnX, int spawnY, int squareColor, int squareLength, PixelWorld world, Consumer<Square> onCreated) {
+    public SquareCreation(String squareName, int spawnX, int spawnY, int squareColor, int squareLength, int squareSpeed, PixelWorld world, Consumer<Square> onCreated) {
         super(world);
         this.squareName = squareName;
         this.spawnX = spawnX;
         this.spawnY = spawnY;
         this.squareColor = squareColor;
         this.squareLength = squareLength;
+        this.squareSpeed = squareSpeed;
         this.onCreated = onCreated;
     }
 
@@ -58,7 +60,7 @@ public class SquareCreation extends WorldAction {
                 throw new SpawnPointOutsideWorldException("square body outside bottom border");
             }
 
-            Square square = new Square(squareName, spawnPoint, squareLength, squareColor);
+            Square square = new Square(squareName, spawnPoint, squareLength, squareColor, squareSpeed);
 
             pixelWorld.addSquare(square);
 
