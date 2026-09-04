@@ -32,13 +32,13 @@ public class DevPanel {
         graphics.fillRect(0 , 0, FRAME_WIDTH, FRAME_HEIGHT);
 
         graphics.setColor(Color.GREEN);
-        graphics.setFont(new Font("Consolas", Font.BOLD, 16));
+        graphics.setFont(new Font("Consolas", Font.BOLD, 12));
 
         for(int i = 0 ; i < mainWorld.getSquares().size() ; i++) {
 
             var square = mainWorld.getSquares().get(i);
 
-            graphics.drawString(String.format("Square -> name:%s | x:%d | y:%d", square.name, square.currentX, square.currentY), 10, i * 20 + 20);
+            graphics.drawString(String.format("Square -> name:%s | x:%d | y:%d | e.x:%.2f | e.y:%.2f", square.name, square.currentX, square.currentY, square.exactX, square.exactY), 10, i * 20 + 20);
 
         }
 
