@@ -5,32 +5,49 @@ import org.saadmeddiche.pixelworld.square.Square;
 
 public class SquareMove extends SquareAction {
 
-    private final int x;
-    private final int y;
+    private final MoveIn in;
+    private final int toward;
 
-    public SquareMove(Square square, int x, int y) {
+    public enum MoveIn {
+        X,
+        Y
+    }
+
+    public SquareMove(Square square, MoveIn in, int toward) {
         super(square);
-        this.x = x;
-        this.y = y;
+        this.in = in;
+        this.toward = toward;
     }
 
     public void execute() {
 
-        double moveX = x * square.speed * SimulationEngine.deltaTime;
-        double moveY = y * square.speed * SimulationEngine.deltaTime;
+        if(MoveIn.X.equals(in)) {
 
-        if (square.exactX + moveX < 0) return;
-        if (square.exactX + moveX + square.length > square.world.width) return;
+            double moveX = toward * square.speed * SimulationEngine.deltaTime;
 
-        if (square.exactY + moveY < 0) return;
-        if (square.exactY + moveY + square.length > square.world.height) return;
+            if (square.exactX + moveX < 0) return;
+            if (square.exactX + moveX + square.length > square.world.width) return;
 
-        square.exactX += moveX;
-        square.exactY += moveY;
+            square.exactX += moveX;
 
-        square.currentX = (int) Math.round(square.exactX);
-        square.currentY = (int) Math.round(square.exactY);
+            square.currentX = (int) Math.round(square.exactX);
+
+        }
+
+        if(MoveIn.Y.equals(in)) {
+
+            double moveY = toward * square.speed * SimulationEngine.deltaTime;
+
+            if (square.exactY + moveY < 0) return;
+            if (square.exactY + moveY + square.length > square.world.height) return;
+
+            square.exactY += moveY;
+
+            square.currentY = (int) Math.round(square.exactY);
+
+        }
 
     }
+
 
 }

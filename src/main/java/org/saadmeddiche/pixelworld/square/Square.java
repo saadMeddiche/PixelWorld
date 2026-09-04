@@ -57,4 +57,12 @@ public class Square {
         this.actions.add(new SquareMove(this, dx, dy));
     }
 
+    public void moveToX(int x) {
+        this.actions.add(new SquareMove(this, SquareMove.MoveIn.X, x));
+    }
+
+    public void moveToY(int y) {
+        this.actions.add(new SquareMove(this, SquareMove.MoveIn.Y, y));
+    }
+
 }
