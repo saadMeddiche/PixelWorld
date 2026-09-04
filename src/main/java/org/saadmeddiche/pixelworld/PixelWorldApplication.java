@@ -1,12 +1,11 @@
 package org.saadmeddiche.pixelworld;
 
+import org.saadmeddiche.pixelworld.world.PixelWorld;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
-
-import javax.swing.*;
 
 @EnableScheduling
 @SpringBootApplication
@@ -23,26 +22,12 @@ public class PixelWorldApplication {
 
     @Bean
     public PixelWorld mainWorld() {
-
-        var mainWorld = PixelWorld.create(500,500, applicationName + " (Main)");
-
-        mainWorld.frame.setResizable(false);
-        mainWorld.frame.setLocationRelativeTo(null);
-
-        return mainWorld;
-
+        return new PixelWorld(500,500, applicationName + " (Main)");
     }
 
     @Bean
     public PixelWorld secondaryWorld() {
-
-        var secondaryWorld = PixelWorld.create(500,500, applicationName + " (Secondary)");
-
-        secondaryWorld.frame.setResizable(true);
-        secondaryWorld.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        return secondaryWorld;
-
+        return new PixelWorld(500,500, applicationName + " (Secondary)");
     }
 
 }
