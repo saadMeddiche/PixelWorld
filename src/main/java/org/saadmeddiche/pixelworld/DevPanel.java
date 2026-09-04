@@ -23,10 +23,13 @@ public class DevPanel {
         this.frame = createJframe();
     }
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 100)
     public void run() {
 
         Graphics graphics = frame.getGraphics();
+
+        graphics.setColor(Color.WHITE);
+        graphics.fillRect(0 , 0, FRAME_WIDTH, FRAME_HEIGHT);
 
         graphics.setColor(Color.GREEN);
         graphics.setFont(new Font("Consolas", Font.BOLD, 16));
