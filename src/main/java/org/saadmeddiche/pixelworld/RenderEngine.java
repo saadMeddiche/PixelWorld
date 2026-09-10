@@ -2,6 +2,7 @@ package org.saadmeddiche.pixelworld;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.saadmeddiche.pixelworld.tree.Tree;
 import org.saadmeddiche.pixelworld.world.PixelWorld;
 import org.springframework.boot.ansi.AnsiColor;
 import org.springframework.boot.ansi.AnsiOutput;
@@ -48,6 +49,8 @@ public class RenderEngine {
 
         script_paint_squares(mainWorld);
 
+        script_paint_trees(mainWorld);
+
         draw();
 
     }
@@ -59,6 +62,26 @@ public class RenderEngine {
             for(int x = 0 ; x < square.length; x++) {
                 for (int y = 0; y < square.length; y++) {
                     setPixel(square.currentX + x, square.currentY + y, square.color);
+                }
+            }
+
+        }
+
+    }
+
+    private void script_paint_trees(PixelWorld world) {
+
+        for(var tree : world.getTrees()) {
+
+            for(int x = 0 ; x < Tree.greenPartWidth; x++) {
+                for (int y = 0; y < Tree.greenPartHeight; y++) {
+                    setPixel(tree.currentX + x, tree.currentY + y, 0x00FF00);
+                }
+            }
+
+            for(int x = 0 ; x < Tree.brownPartWidth; x++) {
+                for (int y = 0; y < Tree.brownPartHeight; y++) {
+                    setPixel(tree.currentX + x + ((Tree.greenPartWidth - Tree.brownPartWidth)  / 2), tree.currentY + Tree.greenPartHeight + y, 0xA52A2A);
                 }
             }
 
