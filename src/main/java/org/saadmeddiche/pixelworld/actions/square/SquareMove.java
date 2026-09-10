@@ -23,7 +23,11 @@ public class SquareMove extends SquareAction {
 
         if(MoveIn.X.equals(in)) {
 
-            if(toward <= square.currentX ) return;
+            if(toward <= square.currentX ) {
+                square.currentX = toward;
+                square.exactX = toward;
+                return;
+            }
 
             double moveByX = square.speed * SimulationEngine.deltaTime;
 
@@ -44,7 +48,11 @@ public class SquareMove extends SquareAction {
 
         if(MoveIn.Y.equals(in)) {
 
-            if(toward <= square.currentY ) return;
+            if(toward <= square.currentY ) {
+                square.currentY = toward;
+                square.exactY = toward;
+                return;
+            }
 
             double moveByY = square.speed * SimulationEngine.deltaTime;
 
