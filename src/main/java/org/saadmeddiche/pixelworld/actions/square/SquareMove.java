@@ -23,6 +23,8 @@ public class SquareMove extends SquareAction {
 
         if(MoveIn.X.equals(in)) {
 
+            if (toward < 0 || toward >= square.world.width) return;
+
             if(toward <= square.currentX ) {
                 square.currentX = toward;
                 square.exactX = toward;
@@ -47,6 +49,8 @@ public class SquareMove extends SquareAction {
         }
 
         if(MoveIn.Y.equals(in)) {
+
+            if (toward < 0 || toward >= square.world.height) return;
 
             if(toward <= square.currentY ) {
                 square.currentY = toward;
