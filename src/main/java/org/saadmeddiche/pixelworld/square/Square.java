@@ -46,11 +46,11 @@ public class Square {
     }
 
     public void right() {
-        moveToY(currentX + 1);
+        moveToX(currentX + 1);
     }
 
     public void left() {
-        moveToY(currentX - 1);
+        moveToX(currentX - 1);
     }
 
     public void moveToX(int x) {
