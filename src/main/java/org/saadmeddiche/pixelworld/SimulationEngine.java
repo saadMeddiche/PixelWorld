@@ -38,12 +38,8 @@ public class SimulationEngine {
 
         this.mainWorld.actions.add(
                 new SquareCreation("#2", 0 , 0,
-                        0x00FF00, 2, 10, mainWorld,
-                        square -> {
-                            for(int i = 0 ; i < 500; i++) {
-                                square.moveBy(1 , 1);
-                            }
-                        }
+                        0x00FF00, 2, 100, mainWorld,
+                        square -> square.moveToX(400)
                 )
         );
 
