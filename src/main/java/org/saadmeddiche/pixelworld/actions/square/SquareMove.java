@@ -5,29 +5,29 @@ import org.saadmeddiche.pixelworld.square.Square;
 
 public class SquareMove extends SquareAction {
 
-    private final MoveIn in;
-    private final int toward;
+    private final Axis in;
+    private final int destination;
 
-    public enum MoveIn {
+    public enum Axis {
         X,
         Y
     }
 
-    public SquareMove(Square square, MoveIn in, int toward) {
+    public SquareMove(Square square, Axis in, int destination) {
         super(square);
         this.in = in;
-        this.toward = toward;
+        this.destination = destination;
     }
 
     public void execute() {
 
-        if(MoveIn.X.equals(in)) {
+        if(Axis.X.equals(in)) {
 
-            if (toward < 0 || toward >= square.world.width) return;
+            if (destination < 0 || destination >= square.world.width) return;
 
-            if(toward <= square.currentX ) {
-                square.currentX = toward;
-                square.exactX = toward;
+            if(destination <= square.currentX ) {
+                square.currentX = destination;
+                square.exactX = destination;
                 return;
             }
 
@@ -40,21 +40,21 @@ public class SquareMove extends SquareAction {
 
             square.currentX = (int) Math.round(square.exactX);
 
-            if(square.currentX >= toward || square.exactX >= toward) {
-                square.currentX = toward;
-                square.exactX = toward;
+            if(square.currentX >= destination || square.exactX >= destination) {
+                square.currentX = destination;
+                square.exactX = destination;
                 return;
             }
 
         }
 
-        if(MoveIn.Y.equals(in)) {
+        if(Axis.Y.equals(in)) {
 
-            if (toward < 0 || toward >= square.world.height) return;
+            if (destination < 0 || destination >= square.world.height) return;
 
-            if(toward <= square.currentY ) {
-                square.currentY = toward;
-                square.exactY = toward;
+            if(destination <= square.currentY ) {
+                square.currentY = destination;
+                square.exactY = destination;
                 return;
             }
 
@@ -67,9 +67,9 @@ public class SquareMove extends SquareAction {
 
             square.currentY = (int) Math.round(square.exactY);
 
-            if(square.currentY >= toward || square.exactY >= toward) {
-                square.currentY = toward;
-                square.exactY = toward;
+            if(square.currentY >= destination || square.exactY >= destination) {
+                square.currentY = destination;
+                square.exactY = destination;
                 return;
             }
 
