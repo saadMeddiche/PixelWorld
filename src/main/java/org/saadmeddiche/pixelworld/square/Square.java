@@ -38,23 +38,19 @@ public class Square {
     }
 
     public void up() {
-        moveBy(0, -1);
+        moveToY(currentY - 1);
     }
 
     public void down() {
-        moveBy(0, 1);
+        moveToY(currentY + 1);
     }
 
     public void right() {
-        moveBy(1, 0);
+        moveToY(currentX + 1);
     }
 
     public void left() {
-        moveBy(-1, 0);
-    }
-
-    public void moveBy(int dx, int dy) {
-        this.actions.add(new SquareMove(this, dx, dy));
+        moveToY(currentX - 1);
     }
 
     public void moveToX(int x) {
