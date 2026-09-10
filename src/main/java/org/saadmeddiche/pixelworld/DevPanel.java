@@ -34,9 +34,11 @@ public class DevPanel {
         graphics.setColor(Color.GREEN);
         graphics.setFont(new Font("Consolas", Font.BOLD, 12));
 
-        for(int i = 0 ; i < mainWorld.getSquares().size() ; i++) {
+        graphics.drawString(String.format("accumulated_simulation_time -> :%.2f", SimulationEngine.accumulatedDeltaTime), 10, 20);
 
-            var square = mainWorld.getSquares().get(i);
+        for(int i = 1 ; i <= mainWorld.getSquares().size() ; i++) {
+
+            var square = mainWorld.getSquares().get(i - 1);
 
             graphics.drawString(String.format("Square -> name:%s | x:%d | y:%d | e.x:%.2f | e.y:%.2f", square.name, square.currentX, square.currentY, square.exactX, square.exactY), 10, i * 20 + 20);
 
