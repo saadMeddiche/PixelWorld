@@ -20,6 +20,7 @@ public class SimulationEngine {
     private long TICK_COUNTER =  0;
 
     public static volatile double deltaTime = 0;
+    public static volatile double accumulatedDeltaTime = 0;
     private static volatile long lastTime = System.nanoTime();
 
     private final PixelWorld mainWorld;
@@ -50,6 +51,8 @@ public class SimulationEngine {
 
     @Scheduled(fixedRate = 15)
     public void run() {
+
+        accumulatedDeltaTime += deltaTime;
 
         log.info(AnsiOutput.toString(AnsiColor.MAGENTA, "Tick #{} delta #{}"), TICK_COUNTER++, deltaTime);
 
