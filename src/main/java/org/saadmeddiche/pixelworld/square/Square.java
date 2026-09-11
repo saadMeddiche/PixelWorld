@@ -1,5 +1,7 @@
 package org.saadmeddiche.pixelworld.square;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.saadmeddiche.pixelworld.actions.square.SquareAction;
 import org.saadmeddiche.pixelworld.actions.square.SquareMove;
 import org.saadmeddiche.pixelworld.world.SpawnPoint;
@@ -11,10 +13,10 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 public class Square {
 
     public int speed;
-    public int currentX;
-    public int currentY;
-    public double exactX;
-    public double exactY;
+    public @Setter @Getter int currentX;
+    public @Setter @Getter int currentY;
+    public @Setter @Getter double exactX;
+    public @Setter @Getter double exactY;
     public final PixelWorld world;
 
     public final String name;

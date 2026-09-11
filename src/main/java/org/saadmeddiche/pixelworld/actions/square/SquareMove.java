@@ -3,6 +3,9 @@ package org.saadmeddiche.pixelworld.actions.square;
 import org.saadmeddiche.pixelworld.SimulationEngine;
 import org.saadmeddiche.pixelworld.square.Square;
 
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
 public class SquareMove extends SquareAction {
 
     private final Axis in;
@@ -22,62 +25,51 @@ public class SquareMove extends SquareAction {
     public void execute() {
 
         if(Axis.X.equals(in)) {
-
-            if (destination < 0 || destination >= square.world.width) return;
-
-            if(destination <= square.currentX ) {
-                square.currentX = destination;
-                square.exactX = destination;
-                return;
-            }
-
-            double moveByX = square.speed * SimulationEngine.deltaTime;
-
-            if (square.exactX + moveByX < 0) return;
-            if (square.exactX + moveByX + square.length > square.world.width) return;
-
-            square.exactX += moveByX;
-
-            square.currentX = (int) Math.round(square.exactX);
-
-            if(square.currentX >= destination || square.exactX >= destination) {
-                square.currentX = destination;
-                square.exactX = destination;
-                return;
-            }
-
+            execution(
+                    square::setCurrentX, square::setExactX,
+                    square::getCurrentX, square::getExactX,
+                    0,square.world.width - square.length
+            );
         }
 
         if(Axis.Y.equals(in)) {
+            execution(
+                    square::setCurrentY, square::setExactY,
+                    square::getCurrentY, square::getExactY,
+                    0,square.world.height - square.length
+            );
+        }
 
-            if (destination < 0 || destination >= square.world.height) return;
+    }
 
-            if(destination <= square.currentY ) {
-                square.currentY = destination;
-                square.exactY = destination;
-                return;
-            }
+    private void execution(Consumer<Integer> currentSetter, Consumer<Double> exactSetter,
+                           Supplier<Integer> currentGetter, Supplier<Double> exactGetter,
+                           int minDestination, int maxDestination) {
 
-            double moveByY = square.speed * SimulationEngine.deltaTime;
+        if (destination < minDestination || destination > maxDestination) return;
 
-            if (square.exactY + moveByY < 0) return;
-            if (square.exactY + moveByY + square.length > square.world.height) return;
+        if(destination <= currentGetter.get() ) {
+            currentSetter.accept(destination);
+            exactSetter.accept((double) destination);
+            return;
+        }
 
-            square.exactY += moveByY;
+        double moveByX = square.speed * SimulationEngine.deltaTime;
 
-            square.currentY = (int) Math.round(square.exactY);
+        if (exactGetter.get() + moveByX < minDestination) return;
+        if (exactGetter.get() + moveByX + square.length > maxDestination) return;
 
-            if(square.currentY >= destination || square.exactY >= destination) {
-                square.currentY = destination;
-                square.exactY = destination;
-                return;
-            }
+        exactSetter.accept(exactGetter.get() + moveByX);
+        currentSetter.accept((int) Math.round(exactGetter.get()));
 
+        if(currentGetter.get() >= destination || exactGetter.get() >= destination) {
+            currentSetter.accept(destination);
+            exactSetter.accept((double) destination);
+            return;
         }
 
         square.actions.add(this);
 
     }
-
 
 }
