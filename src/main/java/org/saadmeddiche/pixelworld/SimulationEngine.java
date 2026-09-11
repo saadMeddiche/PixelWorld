@@ -7,6 +7,7 @@ import org.saadmeddiche.pixelworld.actions.world.SquareCreation;
 import org.saadmeddiche.pixelworld.actions.world.TreesCreation;
 import org.saadmeddiche.pixelworld.actions.world.WorldAction;
 import org.saadmeddiche.pixelworld.square.SquareController;
+import org.saadmeddiche.pixelworld.util.TimeSpentUtil;
 import org.saadmeddiche.pixelworld.world.PixelWorld;
 import org.springframework.boot.ansi.AnsiColor;
 import org.springframework.boot.ansi.AnsiOutput;
@@ -19,6 +20,8 @@ import org.springframework.stereotype.Component;
 public class SimulationEngine {
 
     private long TICK_COUNTER =  0;
+    private final static int TICK_RATE_TIME_IN_MILLIS = 15;
+    private final static double TICK_RATE_TIME_IN_SECONDS = TICK_RATE_TIME_IN_MILLIS / 1e3;
 
     public static volatile double deltaTime = 0;
     public static volatile double accumulatedDeltaTime = 0;
@@ -48,8 +51,18 @@ public class SimulationEngine {
 
     }
 
-    @Scheduled(fixedRate = 15)
+    @Scheduled(fixedRate = TICK_RATE_TIME_IN_MILLIS)
     public void run() {
+
+        double spentTimeInSeconds = TimeSpentUtil.inSeconds(this::main_script);
+
+        if(spentTimeInSeconds > TICK_RATE_TIME_IN_SECONDS) {
+            log.warn(AnsiOutput.toString(AnsiColor.RED, "Delay in Tick #{} Delta #{} Spent#{}"), TICK_COUNTER, deltaTime, spentTimeInSeconds);
+        }
+
+    }
+
+    private void main_script() {
 
         accumulatedDeltaTime += deltaTime;
 
