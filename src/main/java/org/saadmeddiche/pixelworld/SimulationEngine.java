@@ -43,8 +43,12 @@ public class SimulationEngine {
         this.mainWorld.actions.add(
                 new SquareCreation("#2", 0 , 0,
                         0x00FF00, 2, 100, mainWorld,
-                        square -> square.moveToX(400)
-                )
+                        square -> {
+                    square.moveToX(400);
+                    square.moveToY(400);
+                    square.moveToX(0);
+                    square.moveToY(0);
+                })
         );
 
         this.mainWorld.actions.add(new TreesCreation(mainWorld, new int[][]{{0,0},{0,400},{100,100}}, renderEngine::bg_script_paint_trees));

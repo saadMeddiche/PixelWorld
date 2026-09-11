@@ -7,7 +7,6 @@ import org.saadmeddiche.pixelworld.actions.square.SquareMove;
 import org.saadmeddiche.pixelworld.world.SpawnPoint;
 import org.saadmeddiche.pixelworld.world.PixelWorld;
 
-import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class Square {
@@ -22,7 +21,7 @@ public class Square {
     public final String name;
     public final int length;
     public final int color;
-    public final Queue<SquareAction> actions = new ConcurrentLinkedDeque<>();
+    public final ConcurrentLinkedDeque<SquareAction> actions = new ConcurrentLinkedDeque<>();
 
     public Square(String name, SpawnPoint spawn, int length, int color, int speed) {
 

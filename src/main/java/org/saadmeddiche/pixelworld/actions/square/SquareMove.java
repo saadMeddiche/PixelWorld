@@ -68,7 +68,7 @@ public class SquareMove extends SquareAction {
             return;
         }
 
-        if (towardPositive && nextPoint + square.length >= destination) {
+        if (towardPositive && nextPoint >= destination) {
             currentSetter.accept(destination);
             exactSetter.accept((double) destination);
             return;
@@ -77,7 +77,7 @@ public class SquareMove extends SquareAction {
         exactSetter.accept(nextPoint);
         currentSetter.accept((int) Math.round(nextPoint));
 
-        square.actions.add(this);
+        square.actions.addFirst(this);
 
     }
 
