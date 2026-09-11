@@ -40,19 +40,19 @@ public class Square {
     }
 
     public void up() {
-        moveToY(currentY - 1);
+        moveToY(currentY - 10);
     }
 
     public void down() {
-        moveToY(currentY + 1);
+        moveToY(currentY + 10);
     }
 
     public void right() {
-        moveToX(currentX + 1);
+        moveToX(currentX + 10);
     }
 
     public void left() {
-        moveToX(currentX - 1);
+        moveToX(currentX - 10);
     }
 
     public void moveToX(int x) {

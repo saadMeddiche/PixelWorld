@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 public class SquareMove extends SquareAction {
 
     private final Axis in;
-    private final int destination;
+    private int destination;
 
     public enum Axis {
         X,
@@ -46,10 +46,16 @@ public class SquareMove extends SquareAction {
                            Supplier<Integer> currentGetter, Supplier<Double> exactGetter,
                            int minDestination, int maxDestination) {
 
-        if (destination < minDestination || destination > maxDestination) return;
-
         boolean towardPositive = exactGetter.get() < destination;
         boolean towardNegative = exactGetter.get() > destination;
+
+        // exist if already reached the borders
+        if(towardPositive && exactGetter.get() == maxDestination) return;
+        if(towardNegative && exactGetter.get() == minDestination) return;
+
+        // if destination is outside the border, update it to match the border position
+        if(towardNegative && destination < minDestination) destination = minDestination;
+        if(towardPositive && destination > maxDestination) destination = maxDestination;
 
         double moveBy = square.speed * SimulationEngine.deltaTime;
         double nextPoint = towardPositive
