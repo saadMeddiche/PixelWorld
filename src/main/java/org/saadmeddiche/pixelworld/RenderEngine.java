@@ -24,6 +24,7 @@ public class RenderEngine {
     private long FRAME_COUNTER = 0;
     private final static int FRAME_RATE_TIME_IN_MILLIS = 30;
     private final static double FRAME_RATE_TIME_IN_SECONDS = FRAME_RATE_TIME_IN_MILLIS / 1e3;
+
     private final static int FRAME_WIDTH = 500;
     private final static int FRAME_HEIGHT = 500;
     private final static int[] BACK_GROUND = new int[FRAME_WIDTH * FRAME_HEIGHT];
@@ -54,7 +55,6 @@ public class RenderEngine {
 
     }
 
-    @SneakyThrows
     private void main_script() {
 
         log.info(AnsiOutput.toString(AnsiColor.MAGENTA, "Frame #{} delta #{}"), FRAME_COUNTER++, deltaTime);
