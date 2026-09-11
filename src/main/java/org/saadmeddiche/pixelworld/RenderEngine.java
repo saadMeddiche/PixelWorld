@@ -22,6 +22,7 @@ public class RenderEngine {
     private long FRAME_COUNTER = 0;
     private final static int FRAME_WIDTH = 500;
     private final static int FRAME_HEIGHT = 500;
+    private final static int[] BACK_GROUND = new int[FRAME_WIDTH * FRAME_HEIGHT];
 
     public static volatile double deltaTime = 0;
     private static volatile long lastTime = System.nanoTime();
@@ -49,8 +50,6 @@ public class RenderEngine {
 
         script_paint_squares(mainWorld);
 
-        script_paint_trees(mainWorld);
-
         draw();
 
     }
@@ -69,19 +68,23 @@ public class RenderEngine {
 
     }
 
-    private void script_paint_trees(PixelWorld world) {
+    public void bg_script_paint_trees() {
 
-        for(var tree : world.getTrees()) {
+        for(var tree : mainWorld.getTrees()) {
 
             for(int x = 0 ; x < Tree.greenPartWidth; x++) {
                 for (int y = 0; y < Tree.greenPartHeight; y++) {
-                    setPixel(tree.currentX + x, tree.currentY + y, 0x00FF00);
+                    int pixelX = tree.currentX + x;
+                    int pixelY = tree.currentY + y;
+                    BACK_GROUND[pixelY * FRAME_WIDTH + pixelX] = 0x00FF00;
                 }
             }
 
             for(int x = 0 ; x < Tree.brownPartWidth; x++) {
                 for (int y = 0; y < Tree.brownPartHeight; y++) {
-                    setPixel(tree.currentX + x + ((Tree.greenPartWidth - Tree.brownPartWidth)  / 2), tree.currentY + Tree.greenPartHeight + y, 0xA52A2A);
+                    int pixelX = tree.currentX + x + ((Tree.greenPartWidth - Tree.brownPartWidth)  / 2);
+                    int pixelY = tree.currentY + Tree.greenPartHeight + y;
+                    BACK_GROUND[pixelY * FRAME_WIDTH + pixelX] = 0xA52A2A;
                 }
             }
 
@@ -90,7 +93,7 @@ public class RenderEngine {
     }
 
     private void clear() {
-        this.bufferedImage.setRGB(0 , 0, FRAME_WIDTH, FRAME_HEIGHT, new int[FRAME_WIDTH * FRAME_HEIGHT], 0, FRAME_WIDTH);
+        this.bufferedImage.setRGB(0 , 0, FRAME_WIDTH, FRAME_HEIGHT, BACK_GROUND, 0, FRAME_WIDTH);
     }
 
     private void updateClock() {

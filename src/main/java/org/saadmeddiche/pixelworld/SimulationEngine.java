@@ -4,7 +4,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.saadmeddiche.pixelworld.actions.world.SquareCreation;
-import org.saadmeddiche.pixelworld.actions.world.TreeCreation;
+import org.saadmeddiche.pixelworld.actions.world.TreesCreation;
 import org.saadmeddiche.pixelworld.actions.world.WorldAction;
 import org.saadmeddiche.pixelworld.square.SquareController;
 import org.saadmeddiche.pixelworld.world.PixelWorld;
@@ -44,17 +44,7 @@ public class SimulationEngine {
                 )
         );
 
-        this.mainWorld.actions.add(
-                new TreeCreation(mainWorld, 0, 0)
-        );
-
-        this.mainWorld.actions.add(
-                new TreeCreation(mainWorld, 0, 400)
-        );
-
-        this.mainWorld.actions.add(
-                new TreeCreation(mainWorld, 100, 100)
-        );
+        this.mainWorld.actions.add(new TreesCreation(mainWorld, new int[][]{{0,0},{0,400},{100,100}}, renderEngine::bg_script_paint_trees));
 
     }
 
