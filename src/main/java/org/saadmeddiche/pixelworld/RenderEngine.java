@@ -1,8 +1,10 @@
 package org.saadmeddiche.pixelworld;
 
 import lombok.Getter;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.saadmeddiche.pixelworld.tree.Tree;
+import org.saadmeddiche.pixelworld.util.TimeSpentUtil;
 import org.saadmeddiche.pixelworld.world.PixelWorld;
 import org.springframework.boot.ansi.AnsiColor;
 import org.springframework.boot.ansi.AnsiOutput;
@@ -20,6 +22,8 @@ import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 public class RenderEngine {
 
     private long FRAME_COUNTER = 0;
+    private final static int FRAME_RATE_TIME_IN_MILLIS = 30;
+    private final static double FRAME_RATE_TIME_IN_SECONDS = FRAME_RATE_TIME_IN_MILLIS / 1e3;
     private final static int FRAME_WIDTH = 500;
     private final static int FRAME_HEIGHT = 500;
     private final static int[] BACK_GROUND = new int[FRAME_WIDTH * FRAME_HEIGHT];
@@ -39,8 +43,19 @@ public class RenderEngine {
 
     }
 
-    @Scheduled(fixedRate = 30)
+    @Scheduled(fixedRate = FRAME_RATE_TIME_IN_MILLIS)
     public void run() {
+
+        double spentTimeInSeconds = TimeSpentUtil.inSeconds(this::main_script);
+
+        if(spentTimeInSeconds > FRAME_RATE_TIME_IN_SECONDS) {
+            log.warn(AnsiOutput.toString(AnsiColor.RED, "Delay in Frame #{} Delta #{} Spent#{}"), FRAME_COUNTER, deltaTime, spentTimeInSeconds);
+        }
+
+    }
+
+    @SneakyThrows
+    private void main_script() {
 
         log.info(AnsiOutput.toString(AnsiColor.MAGENTA, "Frame #{} delta #{}"), FRAME_COUNTER++, deltaTime);
 
