@@ -48,25 +48,28 @@ public class SquareMove extends SquareAction {
 
         if (destination < minDestination || destination > maxDestination) return;
 
-        if(destination <= currentGetter.get() ) {
+        boolean towardPositive = exactGetter.get() < destination;
+        boolean towardNegative = exactGetter.get() > destination;
+
+        double moveBy = square.speed * SimulationEngine.deltaTime;
+        double nextPoint = towardPositive
+                ? exactGetter.get() + moveBy
+                : exactGetter.get() - moveBy;
+
+        if (towardNegative && nextPoint <= destination) {
             currentSetter.accept(destination);
             exactSetter.accept((double) destination);
             return;
         }
 
-        double moveByX = square.speed * SimulationEngine.deltaTime;
-
-        if (exactGetter.get() + moveByX < minDestination) return;
-        if (exactGetter.get() + moveByX + square.length > maxDestination) return;
-
-        exactSetter.accept(exactGetter.get() + moveByX);
-        currentSetter.accept((int) Math.round(exactGetter.get()));
-
-        if(currentGetter.get() >= destination || exactGetter.get() >= destination) {
+        if (towardPositive && nextPoint + square.length >= destination) {
             currentSetter.accept(destination);
             exactSetter.accept((double) destination);
             return;
         }
+
+        exactSetter.accept(nextPoint);
+        currentSetter.accept((int) Math.round(nextPoint));
 
         square.actions.add(this);
 
